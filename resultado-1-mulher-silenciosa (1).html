@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seu Resultado – Rastreio da Mulher Posicionada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:        #211631;
+      --primary-light:  #2e1a4a;
+      --secondary:      #E6AFFC;
+      --secondary-deep: #8B2FC9;
+      --bg:             #faf6ff;
+      --white:          #ffffff;
+      --text-body:      #1a0e2e;
+      --text-soft:      #2e1a4a;
+      --text-muted:     #6b4f82;
+      --border:         rgba(139,47,201,0.18);
+      --border-strong:  rgba(139,47,201,0.4);
+      --shadow:         0 4px 28px rgba(33,22,49,0.08);
+      --shadow-lg:      0 16px 48px rgba(33,22,49,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text-body);
+      overflow-x: hidden;
+    }
+
+    /* ── fundo decorativo ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -8%, rgba(230,175,252,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 40% at 100% 100%, rgba(230,175,252,0.10) 0%, transparent 55%),
+        linear-gradient(175deg, #fdf8ff 0%, #f7f0fd 50%, #faf5ff 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── estrelas decorativas ── */
+    .deco-star {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes twinkle { 0%,100%{opacity:.07} 50%{opacity:.15} }
+    .deco-star { animation: twinkle 5s ease-in-out infinite; }
+    .deco-star:nth-child(2) { animation-delay: 2s; }
+    .deco-star:nth-child(3) { animation-delay: 3.5s; }
+
+    /* ── layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ═══════════════════════════════
+       HEADER
+    ═══════════════════════════════ */
+    .site-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 20px 0;
+    }
+    .logo-wrap {
+      width: 120px;
+      margin-bottom: 14px;
+    }
+    .logo-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--secondary-deep);
+      text-align: center;
+    }
+    .header-divider {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--secondary-deep), transparent);
+      margin: 12px auto 0;
+      opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════
+       CONTEÚDO PRINCIPAL
+    ═══════════════════════════════ */
+    .content {
+      width: 100%;
+      max-width: 620px;
+      padding: 32px 20px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── eyebrow + headline ── */
+    .result-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--secondary-deep);
+      text-align: center;
+      margin-bottom: 8px;
+      margin-top: 24px;
+    }
+    .result-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: 28px;
+    }
+    .result-headline em {
+      color: var(--secondary-deep);
+      font-style: italic;
+    }
+
+    /* ── card principal ── */
+    .result-card {
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 20px;
+    }
+
+    /* topo escuro do card */
+    .result-card-top {
+      padding: 32px 28px 28px;
+      background: linear-gradient(135deg, #211631 0%, #2e1a4a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .result-card-top::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,175,252,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .result-card-top::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: -20px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,175,252,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .result-tipo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(230,175,252,0.12);
+      border: 1px solid rgba(230,175,252,0.28);
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 16px;
+    }
+    .result-tipo-badge::before { content: '✦'; font-size: 9px; }
+
+    .result-tipo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .result-score-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .score-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 50px;
+      padding: 5px 13px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+    .score-pill .score-letter {
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    /* corpo branco do card */
+    .result-card-body {
+      background: #ffffff;
+      padding: 30px 28px 34px;
+    }
+    .result-card-body p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--text-body);
+      margin-bottom: 18px;
+      text-align: justify;
+      font-weight: 400;
+    }
+    .result-card-body p:last-child { margin-bottom: 0; }
+
+    .result-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,47,201,0.25), transparent);
+      margin: 4px 0 22px;
+    }
+
+    /* ── bloco de destaque / próximo passo ── */
+    .highlight-box {
+      width: 100%;
+      background: rgba(230,175,252,0.10);
+      border: 1px solid rgba(139,47,201,0.2);
+      border-left: 4px solid var(--secondary-deep);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .highlight-box .hl-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--secondary-deep);
+      margin-bottom: 8px;
+    }
+    .highlight-box p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-soft);
+      font-weight: 400;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ── botão refazer ── */
+    .btn-refazer {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: var(--white);
+      border: 1.5px solid var(--border-strong);
+      border-radius: 50px;
+      color: var(--secondary-deep);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+    }
+    .btn-refazer:hover {
+      background: rgba(230,175,252,0.1);
+      border-color: var(--secondary-deep);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 480px) {
+      .result-card-top { padding: 24px 18px 20px; }
+      .result-card-body { padding: 22px 16px 26px; }
+      .highlight-box { padding: 16px 16px; }
+      .content { padding: 24px 16px 50px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- estrelas decorativas -->
+<div class="deco-star" style="top:8%;right:5%;opacity:0.07">
+  <svg width="60" height="60" viewBox="0 0 60 60"><path d="M30 0l2.5 27.5L60 30l-27.5 2.5L30 60l-2.5-27.5L0 30l27.5-2.5Z" fill="#211631"/></svg>
+</div>
+<div class="deco-star" style="bottom:18%;left:4%;opacity:0.06">
+  <svg width="38" height="38" viewBox="0 0 60 60"><path d="M30 0l2.5 27.5L60 30l-27.5 2.5L30 60l-2.5-27.5L0 30l27.5-2.5Z" fill="#211631"/></svg>
+</div>
+<div class="deco-star" style="top:42%;right:3%;opacity:0.05;animation-delay:2s">
+  <svg width="24" height="24" viewBox="0 0 60 60"><path d="M30 0l2.5 27.5L60 30l-27.5 2.5L30 60l-2.5-27.5L0 30l27.5-2.5Z" fill="#8B2FC9"/></svg>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo-wrap">
+      <img src="data:image/jpeg;base64,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" alt="Programa Posicionadas" />
+    </div>
+    <div class="site-title">Rastreio da Mulher Posicionada</div>
+    <div class="header-divider"></div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="content">
+
+    <div class="result-eyebrow">Análise dos Resultados</div>
+    <div class="result-headline">
+      Seu perfil é<br/>
+      <em>A Mulher Silenciosa</em>
+    </div>
+
+    <!-- CARD RESULTADO -->
+    <div class="result-card">
+
+      <!-- topo escuro -->
+      <div class="result-card-top">
+        <div class="result-tipo-badge">Maioria Respostas A</div>
+        <div class="result-tipo-name">A Mulher Silenciosa</div>
+        <div class="result-score-row">
+          <span class="score-pill"><span class="score-letter">A</span> maioria</span>
+          <span class="score-pill"><span class="score-letter">B</span> minoria</span>
+          <span class="score-pill"><span class="score-letter">C</span> minoria</span>
+        </div>
+      </div>
+
+      <!-- corpo branco -->
+      <div class="result-card-body">
+        <p>
+          Você sente que, na maior parte do tempo, sua voz não tem espaço. Quando pensa em se posicionar, um turbilhão de dúvidas vem à mente: "E se acharem que eu sou grossa?", "E se discordarem e eu não souber o que responder?", "Talvez seja melhor deixar pra lá...". Você aprendeu que, muitas vezes, o silêncio é mais seguro do que correr o risco de ser mal interpretada ou rejeitada.
+        </p>
+        <div class="result-divider"></div>
+        <p>
+          Talvez tenha ouvido frases como "Menina educada não responde" ou tenha crescido em um ambiente onde expressar sua opinião não era uma opção. Agora, mesmo quando sente que algo está errado, você engole as palavras. Quando alguém te interrompe, você abaixa o olhar e desiste de continuar. Quando recebe um elogio, automaticamente diz "Imagina, foi sorte". Quando precisa impor um limite, o coração acelera, e antes que perceba, já cedeu novamente.
+        </p>
+        <div class="result-divider"></div>
+        <p>
+          Mas dentro de você há uma voz sufocada, que quer se libertar. Você merece ser ouvida, respeitada e valorizada. Pequenos passos podem mudar tudo: começar a dizer "não" sem justificativas longas, sustentar o olhar ao falar, expressar sua opinião mesmo que suas mãos tremam. Sua voz importa. Sua presença tem valor. O mundo precisa ouvir o que você tem a dizer.
+        </p>
+      </div>
+    </div>
+
+    <!-- BLOCO DESTAQUE -->
+    <div class="highlight-box">
+      <div class="hl-label">✦ &nbsp;O próximo passo</div>
+      <p>
+        <strong>Sua voz tem valor — e pode ser treinada.</strong> A comunicação assertiva é uma habilidade que se aprende. Cada vez que você se expressar, mesmo com o coração acelerado, estará construindo uma nova versão de você mesma: mais posicionada, mais segura, mais livre.
+      </p>
+    </div>
+
+    <!-- BOTÃO REFAZER -->
+    <a href="rastreio-mulher-posicionada.html" class="btn-refazer">↺ &nbsp;Refazer o Rastreio</a>
+
+  </main>
+
+</div><!-- /page -->
+</body>
+</html>
